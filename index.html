@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rive Animation Test</title>
-  <!-- Rive runtime -->
   <script src="https://unpkg.com/@rive-app/canvas@latest"></script>
   <style>
     html, body {
@@ -16,22 +15,27 @@
       align-items: center;
       background-color: #fff; /* optional background */
     }
-    rive-canvas {
-      width: 100vw;
-      height: 100vh;
-      border: 1px solid red; /* helps debug */
+
+    canvas {
+      width: 80%;        /* responsive width */
+      height: auto;      /* maintain aspect ratio */
+      max-width: 600px;  /* optional maximum width */
       display: block;
     }
   </style>
 </head>
 <body>
 
-  <!-- Rive animation -->
-  <rive-canvas
-    src="https://raw.githubusercontent.com/jennie645-beep/rive-test/main/testing.riv"
-    artboard="Artboard"
-    autoplay
-  ></rive-canvas>
+  <canvas id="riveCanvas"></canvas>
+
+  <script>
+    new rive.Rive({
+      src: "testing.riv",
+      canvas: document.getElementById("riveCanvas"),
+      autoplay: true,
+      artboard: "Artboard"
+    });
+  </script>
 
 </body>
 </html>
