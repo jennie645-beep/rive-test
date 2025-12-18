@@ -16,41 +16,44 @@
       background-color: #fff;
     }
     canvas {
-      width: 80%;        /* responsive width */
-      max-width: 600px;  /* optional max width */
-      height: auto;      /* maintain aspect ratio */
+      width: 80%;
+      max-width: 600px;
+      height: auto;
       display: block;
     }
   </style>
 </head>
 <body>
 
-  <canvas id="riveCanvas"></canvas>
+<canvas id="riveCanvas"></canvas>
 
-  <script>
-    // Initialize Rive
-    const riveInstance = new rive.Rive({
-      src: "testing.riv",
-      canvas: document.getElementById("riveCanvas"),
-      autoplay: true,
-      artboard: "Artboard"
-    });
+<script>
+(async () => {
+  // Initialize Rive
+  const riveInstance = new rive.Rive({
+    src: "testing.riv",
+    canvas: document.getElementById("riveCanvas"),
+    autoplay: true,
+    artboard: "Artboard"
+  });
 
-    // When the Rive file is loaded, attach hover events
-    riveInstance.onload = () => {
-      const canvas = document.getElementById("riveCanvas");
+  // Wait until the Rive file is fully loaded
+  await riveInstance.load();
 
-      // Mouse enters → trigger 'Hover'
-      canvas.addEventListener("mouseenter", () => {
-        riveInstance.fire("Hover");
-      });
+  // Select canvas
+  const canvas = document.getElementById("riveCanvas");
 
-      // Mouse leaves → trigger 'Un-Hover'
-      canvas.addEventListener("mouseleave", () => {
-        riveInstance.fire("Un-Hover");
-      });
-    };
-  </script>
+  // Mouse enter → trigger 'Hover' listener
+  canvas.addEventListener("mouseenter", () => {
+    riveInstance.fire("Hover");
+  });
+
+  // Mouse leave → trigger 'Un-Hover' listener
+  canvas.addEventListener("mouseleave", () => {
+    riveInstance.fire("Un-Hover");
+  });
+})();
+</script>
 
 </body>
 </html>
