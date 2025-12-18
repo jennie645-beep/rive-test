@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rive Hover Animation</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rive Shape Hover</title>
+
   <script src="https://unpkg.com/@rive-app/canvas@latest"></script>
+
   <style>
     html, body {
       margin: 0;
@@ -13,47 +15,66 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #fff;
+      background: #fff;
     }
+
     canvas {
-      width: 80%;
-      max-width: 600px;
-      height: auto;
+      width: 400px;
+      height: 400px;
       display: block;
     }
   </style>
 </head>
 <body>
 
-<canvas id="riveCanvas"></canvas>
+<canvas id="riveCanvas" width="400" height="400"></canvas>
 
 <script>
 (async () => {
-  // Initialize Rive
-  const riveInstance = new rive.Rive({
-    src: "testing.riv",
-    canvas: document.getElementById("riveCanvas"),
-    autoplay: true,
-    artboard: "Artboard",
-    stateMachines: "State Machine 1" // replace with your state machine name
-  });
-
-  // Wait until the Rive file is fully loaded
-  await riveInstance.load();
-
-  // Find the hover input
-  const hoverInput = riveInstance.inputs.find(i => i.name === "Hover");
-
   const canvas = document.getElementById("riveCanvas");
 
-  // Mouse enters → set hover input true
-  canvas.addEventListener("mouseenter", () => {
-    if (hoverInput) hoverInput.value = true;
+  const riveInstance = new rive.Rive({
+    src: "testing.riv",
+    canvas: canvas,
+    artboard: "Artboard",
+    stateMachines: "HoverSM",
+    autoplay: true,
   });
 
-  // Mouse leaves → set hover input false
+  // Wait until fully loaded
+  await riveInstance.load();
+
+  const hoverInput = riveInstance.inputs.find(i => i.name === "hover");
+
+  if (!hoverInput) {
+    console.error("Hover input not found");
+    return;
+  }
+
+  let isHovering = false;
+
+  canvas.addEventListener("mousemove", (e) => {
+    const rect = canvas.getBoundingClientRect();
+
+    const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+    const hit = riveInstance.hitTest(x, y, "star");
+
+    if (hit && !isHovering) {
+      hoverInput.value = true;
+      isHovering = true;
+    }
+
+    if (!hit && isHovering) {
+      hoverInput.value = false;
+      isHovering = false;
+    }
+  });
+
   canvas.addEventListener("mouseleave", () => {
-    if (hoverInput) hoverInput.value = false;
+    hoverInput.value = false;
+    isHovering = false;
   });
 })();
 </script>
