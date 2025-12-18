@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rive Animation</title>
+  <title>Rive Animation Test</title>
   <!-- Rive runtime -->
   <script src="https://unpkg.com/@rive-app/canvas@2.6.5"></script>
   <style>
@@ -17,9 +17,9 @@
       background-color: #fff; /* optional background */
     }
     rive-canvas {
-      width: 100%;
-      max-width: 600px; /* optional max width */
-      height: auto;
+      width: 100vw;
+      height: 100vh;
+      border: 1px solid red; /* helps debug */
       display: block;
     }
   </style>
@@ -27,12 +27,11 @@
 <body>
 
   <!-- Rive animation -->
-<rive-canvas
-  src="orlo_image_circle_wip.riv"
-  artboard="Artboard"
-  autoplay
-  style="width:100vw; height:100vh; border:1px solid red;"
-></rive-canvas>
+  <rive-canvas
+    src="https://raw.githubusercontent.com/jennie645-beep/rive-test/main/testing.riv"
+    artboard="Artboard"
+    autoplay
+  ></rive-canvas>
 
 </body>
 </html>
