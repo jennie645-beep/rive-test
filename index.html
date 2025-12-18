@@ -34,23 +34,26 @@
     src: "testing.riv",
     canvas: document.getElementById("riveCanvas"),
     autoplay: true,
-    artboard: "Artboard"
+    artboard: "Artboard",
+    stateMachines: "State Machine 1" // replace with your state machine name
   });
 
   // Wait until the Rive file is fully loaded
   await riveInstance.load();
 
-  // Select canvas
+  // Find the hover input
+  const hoverInput = riveInstance.inputs.find(i => i.name === "Hover");
+
   const canvas = document.getElementById("riveCanvas");
 
-  // Mouse enter → trigger 'Hover' listener
+  // Mouse enters → set hover input true
   canvas.addEventListener("mouseenter", () => {
-    riveInstance.fire("Hover");
+    if (hoverInput) hoverInput.value = true;
   });
 
-  // Mouse leave → trigger 'Un-Hover' listener
+  // Mouse leaves → set hover input false
   canvas.addEventListener("mouseleave", () => {
-    riveInstance.fire("Un-Hover");
+    if (hoverInput) hoverInput.value = false;
   });
 })();
 </script>
