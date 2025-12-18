@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rive Star Hover</title>
 
-  <!-- WebGL runtime (required for modern Rive features) -->
+  <!-- WebGL runtime -->
   <script src="https://unpkg.com/@rive-app/webgl@latest"></script>
 
   <style>
@@ -34,10 +34,11 @@
   const canvas = document.getElementById("riveCanvas");
 
   const riveInstance = new rive.Rive({
-    src: "testing.riv",            // your Rive file
+    // Replace with the raw URL of your .riv file
+    src: "https://raw.githubusercontent.com/jennie645-beep/rive-test/main/testing.riv",
     canvas: canvas,
-    artboard: "Artboard",          // your artboard name
-    stateMachines: "HoverSM",      // your state machine name
+    artboard: "Artboard",
+    stateMachines: "HoverSM",
     autoplay: true,
     onLoad: () => {
       const hoverInput = riveInstance.inputs.find(i => i.name === "hover");
@@ -50,7 +51,7 @@
         const x = (e.clientX - rect.left) * (canvas.width / rect.width);
         const y = (e.clientY - rect.top) * (canvas.height / rect.height);
 
-        // Only trigger when hovering over the shape named 'Star'
+        // Trigger hover only when the mouse is over the shape named 'Star'
         const hit = riveInstance.hitTest(x, y, "Star");
 
         if (hit && !isHovering) {
