@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rive Animation Test</title>
+  <title>Rive Hover Animation</title>
   <script src="https://unpkg.com/@rive-app/canvas@latest"></script>
   <style>
     html, body {
@@ -13,13 +13,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #fff; /* optional background */
+      background-color: #fff;
     }
-
     canvas {
       width: 80%;        /* responsive width */
+      max-width: 600px;  /* optional max width */
       height: auto;      /* maintain aspect ratio */
-      max-width: 600px;  /* optional maximum width */
       display: block;
     }
   </style>
@@ -29,12 +28,28 @@
   <canvas id="riveCanvas"></canvas>
 
   <script>
-    new rive.Rive({
+    // Initialize Rive
+    const riveInstance = new rive.Rive({
       src: "testing.riv",
       canvas: document.getElementById("riveCanvas"),
       autoplay: true,
       artboard: "Artboard"
     });
+
+    // When the Rive file is loaded, attach hover events
+    riveInstance.onload = () => {
+      const canvas = document.getElementById("riveCanvas");
+
+      // Mouse enters → trigger 'Hover'
+      canvas.addEventListener("mouseenter", () => {
+        riveInstance.fire("Hover");
+      });
+
+      // Mouse leaves → trigger 'Un-Hover'
+      canvas.addEventListener("mouseleave", () => {
+        riveInstance.fire("Un-Hover");
+      });
+    };
   </script>
 
 </body>
